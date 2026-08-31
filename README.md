@@ -4,11 +4,15 @@
 # JUAN DIEGO GAITÁN 
 # DOWS GRUPO 01
 
-![img.png](DOSW-ParcialT1/docs/images/drawioPruebapng)
+
+# DRAW IO PRUEBA
+![img.png](/docs/images/drawioPrueba.png)
+
 
 ---
 
-![img.png](DOSW-ParcialT1/docs/images/figmaPrueba.png)
+# FIGMA PRUEBA
+![img.png](/docs/images/figmaPrueba.png)
 
 
 
