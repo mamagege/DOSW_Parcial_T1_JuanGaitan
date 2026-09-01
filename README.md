@@ -1,2 +1,26 @@
 # DOSW_Parcial_T1_JuanGaitan
-Repositorio para parcial T1 Dows Grupo01
+
+LINK BITACORA 
+
+https://github.com/mamagege/BitacoraDOWS.git
+
+
+# JUAN DIEGO GAITÁN 
+# DOWS GRUPO 01
+
+
+# DRAW IO PRUEBA
+![img.png](/docs/images/drawioPrueba.png)
+
+
+---
+
+# FIGMA PRUEBA
+![img.png](/docs/images/figmaPrueba.png)
+
+
+
+
+
+
+
