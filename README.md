@@ -84,9 +84,10 @@ DIP (Inversión de Dependencias): El sistema central de la barbería no depende 
 OCP (Abierto/Cerrado): Si mañana Bob's Barber añade PayPal, simplemente se crea un PayPalAdapter nuevo sin modificar ni una línea del código central de pagos.
 
 
+## JUSTIFICACIÓN: 
 CHAIN OF RESPONSABILITY:  La confirmación de un turno exige 5 validaciones estrictas y secuenciales. Si se usa un modelo tradicional, el código terminaría en un bloque masivo de if-else anidados. Este patrón permite encadenar estas validaciones como peticiones independientes; si uno falla , detiene el proceso y retorna el error de inmediato.  
 
-Principios SOLID que aplica:
+## Principios SOLID que aplica:
 
 SRP (Responsabilidad Única): Cada manejador (Es decir la petición) hace una sola cosa. Es decir ignorar lo que sucede internamente con las demás peticiones.  
 
