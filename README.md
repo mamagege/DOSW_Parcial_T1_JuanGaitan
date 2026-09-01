@@ -8,64 +8,65 @@ https://github.com/mamagege/BitacoraDOWS.git
 # JUAN DIEGO GAITÁN 
 # DOWS GRUPO 01
 
-
-# DRAW IO PRUEBA
-![img.png](/docs/images/drawioPrueba.png)
-
-
----
-
-# FIGMA PRUEBA
-![img.png](/docs/images/figmaPrueba.png)
-
-
-
 # DESAROLLO PARCIAL#2
 
 # DIAGRAMA DE CONTEXTO C4:
 
-![img_1.png](img_1.png)
+![DiagramaContexto](DiagramaContexto.png)
 
 # IDENTIFICACIÓN REQUERIMIENTOS
 
-![img.png](img.png)
+![ListadoRequerimientos](ListadoRequerimientos.png)
 
 # DIGRAMA DE CASOS DE USO
 Para requerimientos RF-BOB-01 Y RF-BOB-03
 
-![img_2.png](img_2.png)
+![DiagramaHistoria](DiagramaHistoria.png)
 
 # Descomposición de tareas:
 
-# Requerimiento Elegido: 
+# Nombre del sistema : BOB BARBERY
 
-RF-BOB-01
-Pagar con los métodos de pago disponibles
+## 1.ÉPICA
+Procesamiento de múltiples metodos de pago para creación de turno
 
-*PATRÓN USADO* : Adapter
+"Los clientes desean pagar con los métodos de pago dispoibles para completar la creación de su turno"
 
-## ÉPICA: BOBS BARBERY
 
-Los clientes desean pagar con los métodos de pago dispoibles para completar la creación de su turno
+## 2. FEATURE 
+Procesamiento del pago con flujo a pasarela de pago correspondiente
 
-## FEATURE: 
+"El cliente elige Nequi como método de pago y oprimer el botón de pagar"
 
-El cliente elige Nequi como método de pago y oprimer el botón de pagar"
+## 3. HISTORIA DE USUARIO
 
-## Historia de Usuario: 
+Pago de turno utilizando pasarela Nequi.
 
-COMO cliente QUIERO elegir Nequi como metodo de pago para confirmar mi turno creado"
+COMO cliente con un turno pre-aprobado
 
-## Criterios de aceptacion:
+QUIERO seleccionar Nequi como método de pago para pagar
 
-DADO que el cliente eligió Nequi como método de pago CUANDO oprime "Pagar" luego de seleccionarlo
-ENTONCES debe transferirse a la pasarela de pago para recibir NEQUI.
+PARA procesar la transacción y confirmar mi turno.
 
-## Tareas: 
 
-- Integrar el API de NEQUI para trasnferir a la pasarela de pagos de NEQUI
-- Listar los metodos de pago disponibles para mostrar al cliente con UI responsive
-- Adaptar el sistema de pagos Legacy con el nuevo sistema de pago con Adapter
+
+## Criterios de Aceptación para la HISTORIA DE USUARIO
+
+DADO que el cliente se encuentra en la pantalla de pago y selecciona "Nequi".
+
+CUANDO ingresa un número de celular terminado en "65" y oprime "Pagar".
+
+ENTONCES el sistema debe comunicarse con la pasarela de Nequi.
+
+
+## 4.TAREAS 
+
+
+Tarea 1: Crear la interfaz abstracta procesarPago() que defina el contrato para la respuesta normalizada con patrón Adapter.
+Tarea 2: Escribir las pruebas unitarias para validar que NequiAdapter retorna RECHAZADO si el celular no termina en 65.
+Tarea 3: Implementar el componente visual responsivo de la tarjeta de Nequi.
+
+
 
 
 # DESGLOSE DE PATRONES: 
@@ -74,12 +75,25 @@ ADAPTER: ESTRUCTURAL
 CHAIN OF RESPONSABILTY: COMPORTAMENTAL
 
 ## JUSTIFICACIÓN: 
+ADAPTER: El sistema debe integrarse con Nequi (API REST propia), PSE (SDK bancario legado) y Stripe, los cuales tienen firmas de métodos (sendpayment, executeBankTransaction, charge) y respuestas totalmente incompatibles. El patrón Adapter se usa como "puente adaptador"para traducir estas respuestas dispares a un único contrato interno normalizado: {payment_Id, estado, mensaje}.  
 
-ADAPTER: El patrón permite crear una clase intermedia que sirve como traductor entre clases antiguas y clases nuevas a implementar
-En el contexto de Bobs Barbery, el sistema actual maneja 4 pasarelas de pago pero entre ellas y sus interfaces hay incompatibilidad
+## Principios SOLID que aplica:
+
+DIP (Inversión de Dependencias): El sistema central de la barbería no depende de los SDKs concretos de Nequi o Stripe, sino de una abstracción/interfaz.
+
+OCP (Abierto/Cerrado): Si mañana Bob's Barber añade PayPal, simplemente se crea un PayPalAdapter nuevo sin modificar ni una línea del código central de pagos.
 
 
-https://app.diagrams.net/#G1rkeHcdPIK4hEpAF5BNMRbev87cYCzm2B#%7B%22pageId%22%3A%22FTWMp4Kn47--Qjpz7caF%22%7D
+CHAIN OF RESPONSABILITY:  La confirmación de un turno exige 5 validaciones estrictas y secuenciales. Si se usa un modelo tradicional, el código terminaría en un bloque masivo de if-else anidados. Este patrón permite encadenar estas validaciones como peticiones independientes; si uno falla , detiene el proceso y retorna el error de inmediato.  
+
+Principios SOLID que aplica:
+
+SRP (Responsabilidad Única): Cada manejador (Es decir la petición) hace una sola cosa. Es decir ignorar lo que sucede internamente con las demás peticiones.  
+
+OCP (Abierto/Cerrado): El caso de estudio exige "permitir agregar nuevas validaciones sin modificar el flujo principal". Con este patrón, si se requiere una validación nueva como por ejemplo: "Validar fidelidad cliente"  solo se crea una nueva petición y se inserta en la cadena.  
+
+
+
 
 
 
